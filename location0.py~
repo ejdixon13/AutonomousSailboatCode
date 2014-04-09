@@ -1,0 +1,23 @@
+#!/usr/bin/python
+#!/usr/bin/python3
+import serial
+
+# determines which port the GPS is on, changes erratically
+ser = serial.Serial('/dev/ttyUSB0', 4800, timeout = 1)
+
+# gets raw data from GPS
+x = ser.read(1200) 
+#print x
+
+# retrieves data in DDMM.MMMM format
+pos1 = x.find("$GPRMC")
+pos2 = x.find("\n", pos1)
+loc = x[pos1:pos2]
+data = loc.split(',')
+if data[2] == 'V':
+    print 'No location found'
+else:
+    print "Latitude = " + data[3] + data[4]
+    print "Longitude = " + data[5] + data[6]
+    print "Speed = " + data[7]
+    print "Course = " + data[8]

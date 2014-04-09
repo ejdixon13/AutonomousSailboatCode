@@ -1,0 +1,6 @@
+from main1 import Main
+
+if __name__=="__main__":
+    main = Main()
+    while True:
+        main.mainFunction()

@@ -1,0 +1,27 @@
+#!/usr/bin/python
+
+# " " '
+
+import serial
+
+class SuperXbee(object):
+    def __init__ (self):
+        self.ser = serial.Serial('/dev/ttyUSB0', 9600, timeout = 1)
+    def startup(self):
+        x = 'n'
+        while x != 'q':
+            x = self.ser.read(5)
+            self.ser.write("Hello")
+            print x
+    def write(self, message):
+        self.ser.write(message)
+
+    def read(self, messageLen):
+        x = ""
+        while x == "":
+            for i in range(0,messageLen):  ## Give time to read
+                x = x + self.ser.read(messageLen)
+            return x
+
+    def close(self):
+        self.ser.close()
